@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 export interface Product {
   id: number;
@@ -16,6 +16,16 @@ export interface Product {
   isSale?: boolean;
 }
 
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+  imageUrl?: string;
+  parentId?: number;
+  isActive?: boolean;
+}
+
 export interface ProductsResponse {
   products: Product[];
   pagination: {
@@ -27,7 +37,6 @@ export interface ProductsResponse {
 }
 
 export const useProducts = (queryParams: Record<string, string | number | boolean | undefined> = {}) => {
-  // Build query string
   const queryString = Object.entries(queryParams)
     .filter(([_, value]) => value !== undefined)
     .map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`)
@@ -37,7 +46,7 @@ export const useProducts = (queryParams: Record<string, string | number | boolea
 
   return useQuery<ProductsResponse>({
     queryKey,
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 };
 
@@ -54,14 +63,14 @@ export const useNewArrivals = (limit: number = 4) => {
 };
 
 export const useProductDetail = (id: string | number | undefined) => {
-  return useQuery({
+  return useQuery<Product>({
     queryKey: [`/api/products/${id}`],
     enabled: !!id,
   });
 };
 
 export const useCategories = () => {
-  return useQuery({
+  return useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
 };
