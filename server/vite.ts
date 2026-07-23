@@ -23,7 +23,9 @@ export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
-    allowedHosts: true,
+    // allowedHosts: true,
+    // Fix: change boolean to array or host string
+allowedHosts: [".onrender.com", "localhost"]
   };
 
   const vite = await createViteServer({
