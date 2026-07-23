@@ -132,7 +132,7 @@ const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
       
       toast({
         title: "Added to cart",
-        description: `${getSelectedProductsCount()} products have been added to your cart.`,
+        description: `৳{getSelectedProductsCount()} products have been added to your cart.`,
       });
       
     } catch (error) {
@@ -169,7 +169,7 @@ const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
               <CardContent className="p-4">
                 <h3 className="font-medium text-sm line-clamp-2 h-10">{currentProduct.name}</h3>
                 <p className="font-bold text-gray-900 mt-2">
-                  ${formatPrice(currentProduct.salePrice || currentProduct.price)}
+                  ৳{formatPrice(currentProduct.salePrice || currentProduct.price)}
                 </p>
               </CardContent>
             </Card>
@@ -181,13 +181,13 @@ const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
               <Card className="h-full relative">
                 <div className="absolute top-2 right-2 z-10">
                   <Checkbox 
-                    id={`select-${product.id}`}
+                    id={`select-৳{product.id}`}
                     checked={selectedProducts[product.id] || false}
                     onCheckedChange={() => handleCheckboxChange(product.id)}
                   />
                 </div>
                 <Link 
-                  href={`/product/${product.id}`} 
+                  href={`/product/৳{product.id}`} 
                   onClick={() => handleProductClick(product)}
                 >
                   <div className="p-2">
@@ -200,7 +200,7 @@ const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
                   <CardContent className="p-4">
                     <h3 className="font-medium text-sm line-clamp-2 h-10">{product.name}</h3>
                     <p className="font-bold text-gray-900 mt-2">
-                      ${formatPrice(product.salePrice || product.price)}
+                      ৳{formatPrice(product.salePrice || product.price)}
                     </p>
                   </CardContent>
                 </Link>
@@ -220,17 +220,17 @@ const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
             
             <div className="flex justify-between">
               <span className="text-sm">Current item:</span>
-              <span className="font-medium">${formatPrice(currentProduct.salePrice || currentProduct.price)}</span>
+              <span className="font-medium">৳{formatPrice(currentProduct.salePrice || currentProduct.price)}</span>
             </div>
             
             <div className="flex justify-between">
               <span className="text-sm">Selected items ({getSelectedProductsCount()}):</span>
-              <span className="font-medium">${formatPrice(getTotalPrice())}</span>
+              <span className="font-medium">৳{formatPrice(getTotalPrice())}</span>
             </div>
             
             <div className="border-t pt-2 flex justify-between font-bold">
               <span>Total:</span>
-              <span>${formatPrice((currentProduct.salePrice || currentProduct.price) + getTotalPrice())}</span>
+              <span>৳{formatPrice((currentProduct.salePrice || currentProduct.price) + getTotalPrice())}</span>
             </div>
           </div>
           

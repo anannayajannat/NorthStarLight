@@ -32,7 +32,7 @@ const ProductDetail: React.FC = () => {
 
   // Fetch product details
   const { data: product, isLoading, error } = useQuery({
-    queryKey: [`/api/products/${id}`],
+    queryKey: [`/api/products/৳{id}`],
   });
   
   // Track product view when product data is loaded
@@ -123,7 +123,7 @@ const ProductDetail: React.FC = () => {
       if (selectedVariant.stock !== null && selectedVariant.stock < quantity) {
         toast({
           title: "Not enough stock available",
-          description: `Only ${selectedVariant.stock} items available`,
+          description: `Only ৳{selectedVariant.stock} items available`,
           variant: "destructive",
         });
         return;
@@ -149,7 +149,7 @@ const ProductDetail: React.FC = () => {
       
       toast({
         title: "Added to cart",
-        description: `${product.name} has been added to your cart.`,
+        description: `৳{product.name} has been added to your cart.`,
       });
       
       // Refetch cart to update cart count in header
@@ -218,14 +218,14 @@ const ProductDetail: React.FC = () => {
             <div className="mt-4">
               {product.salePrice ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl font-bold text-gray-900">${formatPrice(product.salePrice)}</span>
-                  <span className="text-lg text-gray-500 line-through">${formatPrice(product.price)}</span>
+                  <span className="text-2xl font-bold text-gray-900">৳{formatPrice(product.salePrice)}</span>
+                  <span className="text-lg text-gray-500 line-through">৳{formatPrice(product.price)}</span>
                   <span className="text-sm font-medium text-red-600">
                     {Math.round(((product.price - product.salePrice) / product.price) * 100)}% OFF
                   </span>
                 </div>
               ) : (
-                <span className="text-2xl font-bold text-gray-900">${formatPrice(product.price)}</span>
+                <span className="text-2xl font-bold text-gray-900">৳{formatPrice(product.price)}</span>
               )}
             </div>
           </div>
@@ -244,14 +244,14 @@ const ProductDetail: React.FC = () => {
                 {sizes.map(size => (
                   <div key={size}>
                     <RadioGroupItem 
-                      id={`size-${size}`} 
+                      id={`size-৳{size}`} 
                       value={size} 
                       className="sr-only"
                     />
                     <Label
-                      htmlFor={`size-${size}`}
+                      htmlFor={`size-৳{size}`}
                       className={`flex items-center justify-center h-10 rounded-md border cursor-pointer
-                        ${selectedSize === size 
+                        ৳{selectedSize === size 
                           ? 'bg-primary text-white border-primary' 
                           : 'bg-white text-gray-900 border-gray-200 hover:bg-gray-50'}`
                       }
@@ -276,14 +276,14 @@ const ProductDetail: React.FC = () => {
                 {colors.map(color => (
                   <div key={color}>
                     <RadioGroupItem 
-                      id={`color-${color}`} 
+                      id={`color-৳{color}`} 
                       value={color} 
                       className="sr-only"
                     />
                     <Label
-                      htmlFor={`color-${color}`}
+                      htmlFor={`color-৳{color}`}
                       className={`flex items-center justify-center h-10 rounded-md border cursor-pointer
-                        ${selectedColor === color 
+                        ৳{selectedColor === color 
                           ? 'border-primary' 
                           : 'border-gray-200 hover:border-gray-300'}`
                       }
@@ -349,7 +349,7 @@ const ProductDetail: React.FC = () => {
             <div className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-lg">
               <Truck className="h-6 w-6 text-primary mb-2" />
               <span className="font-medium text-sm">Free Shipping</span>
-              <span className="text-xs text-gray-500">On orders over $75</span>
+              <span className="text-xs text-gray-500">On orders over ৳75</span>
             </div>
             <div className="flex flex-col items-center text-center p-4 bg-gray-50 rounded-lg">
               <RotateCcw className="h-6 w-6 text-primary mb-2" />
@@ -414,7 +414,7 @@ const ProductDetail: React.FC = () => {
             <TabsContent value="shipping" className="pt-4">
               <Card className="p-4">
                 <p className="text-sm text-gray-700">
-                  Free standard shipping on all orders over $75. Delivery within 5-7 business days.
+                  Free standard shipping on all orders over ৳75. Delivery within 5-7 business days.
                   <br /><br />
                   We offer a 30-day return policy. Items must be unworn and in original condition with tags attached.
                 </p>

@@ -41,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
       await addToCart(product.id, 1);
       toast({
         title: "Added to cart",
-        description: `${product.name} has been added to your cart.`,
+        description: `৳{product.name} has been added to your cart.`,
       });
       refetchCart();
     } catch (error) {
@@ -54,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
   };
 
   return (
-    <Link href={`/products/${product.id}`}>
+    <Link href={`/products/৳{product.id}`}>
       <div className="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md cursor-pointer">
         <div className="relative">
           <img 
@@ -95,11 +95,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
             <div>
               {product.salePrice ? (
                 <>
-                  <span className="font-semibold text-lg">${product.salePrice.toFixed(2)}</span>
-                  <span className="text-sm text-gray-500 line-through ml-2">${product.price.toFixed(2)}</span>
+                  <span className="font-semibold text-lg">৳{product.salePrice.toFixed(2)}</span>
+                  <span className="text-sm text-gray-500 line-through ml-2">৳{product.price.toFixed(2)}</span>
                 </>
               ) : (
-                <span className="font-semibold text-lg">${product.price.toFixed(2)}</span>
+                <span className="font-semibold text-lg">৳{product.price.toFixed(2)}</span>
               )}
             </div>
             
