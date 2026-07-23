@@ -210,7 +210,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get current user
-  app.get("/api/auth/me", (req, res) => {
+  
+ app.get("/api/auth/me", (req, res) => {
+     res.set("Cache-Control", "no-store");
     if (!req.isAuthenticated()) {
       return res.status(401).json({ message: "Not authenticated" });
     }
