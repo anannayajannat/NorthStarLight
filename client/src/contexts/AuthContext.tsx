@@ -52,26 +52,16 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   // Fetch current user data if authenticated
   const { data: user, isLoading, refetch } = useQuery<User | null>({
-    queryKey: ["/api/auth/me"],
-    onSuccess: (data) => {
-      if (data) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
-    },
-    onError: () => {
-      setIsAuthenticated(false);
-    },
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
+  queryKey: ["/api/auth/me"],
+  retry: false,
+  refetchOnWindowFocus: false,
+});
 
   // Check authentication status on mount
   useEffect(() => {
@@ -120,7 +110,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async (): Promise<boolean> => {
     try {
       await apiRequest("POST", "/api/auth/logout", {});
-      setIsAuthenticated(false);
       queryClient.clear();
       toast({
         title: "Logout successful",
@@ -184,7 +173,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       value={{
         user: user || null,
         isLoading,
-        isAuthenticated,
+        isAuthenticated: !!user,
         login,
         register,
         logout,
