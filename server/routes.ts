@@ -35,6 +35,10 @@ declare module "express-session" {
 const SessionStore = MemoryStore(session);
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Trust the first proxy hop (required behind load balancers/reverse proxies
+  // like Replit, Heroku, Render, etc.) so secure cookies and req.ip work correctly.
+  app.set("trust proxy", 1);
+
   // Setup session middleware
   app.use(
     session({
@@ -43,6 +47,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       saveUninitialized: false,
       cookie: {
         secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
         maxAge: 24 * 60 * 60 * 1000, // 24 hours
       },
       store: new SessionStore({
@@ -1311,8 +1316,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Track user interaction
   app.post("/api/interactions", async (req, res) => {
     try {
-      const schema = insertUserInteractionSchema.omit({ timestamp: true });
-      const interactionData = schema.parse(req.body) as any;
+      const interactionData = insertUserInteractionSchema.parse(req.body) as any;
       
       // Add user ID if authenticated
       if (req.isAuthenticated()) {
@@ -1337,7 +1341,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Error tracking interaction" });
     }
   });
-
   // Get user interactions (for authenticated users)
   app.get("/api/interactions", requireAuth, async (req, res) => {
     try {
