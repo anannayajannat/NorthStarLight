@@ -1,0 +1,112 @@
+version: '3.9'
+
+services:
+  auth:
+    build: ./services/auth
+    ports:
+      - "5001:5001"
+
+  cart:
+    build: ./services/cart
+    ports:
+      - "5002:5002"
+
+  products:
+    build: ./services/products
+    ports:
+      - "5003:5003"
+
+  orders:
+    build: ./services/orders
+    ports:
+      - "5004:5004"
+
+  users:
+    build: ./services/users
+    ports:
+      - "5005:5005"
+
+  client:
+    build: ./client
+    ports:
+      - "4173:4173"
+
+
+# services:
+#   # API Gateway
+#   api-gateway:
+#     build: ./api-gateway
+#     ports:
+#       - '3000:3000'
+#     depends_on:
+#       - auth
+#       - cart
+#       - products
+#       - orders
+#       - users
+
+#   # Auth Service
+#   auth:
+#     build: ./services/auth
+#     environment:
+#       - DATABASE_URL=postgres://postgres:1234@db:5432/shoe_db
+#     depends_on:
+#       - db
+
+#   # Cart Service
+#   cart:
+#     build: ./services/cart
+#     environment:
+#       - DATABASE_URL=postgres://postgres:1234@db:5432/shoe_db
+#     depends_on:
+#       - db
+
+#   # Products Service
+#   products:
+#     build: ./services/products
+#     environment:
+#       - DATABASE_URL=postgres://postgres:1234@db:5432/shoe_db
+#     depends_on:
+#       - db
+
+#   # Orders Service
+#   orders:
+#     build: ./services/orders
+#     environment:
+#       - DATABASE_URL=postgres://postgres:1234@db:5432/shoe_db
+#     depends_on:
+#       - db
+
+#   # Users Service
+#   users:
+#     build: ./services/users
+#     environment:
+#       - DATABASE_URL=postgres://postgres:1234@db:5432/shoe_db
+#     depends_on:
+#       - db
+
+#   # Frontend (Vite client)
+#   client:
+#     build: ./client
+#     ports:
+#       - "4173:4173"
+#     environment:
+#       - VITE_API_URL=http://localhost:3000
+#     depends_on:
+#       - api-gateway
+
+#   # PostgreSQL Database
+#   db:
+#     image: postgres:17
+#     restart: always
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: 1234
+#       POSTGRES_DB: shoe_db
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:

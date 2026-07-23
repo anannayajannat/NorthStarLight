@@ -1,0 +1,13 @@
+
+{
+  "name": "microservice",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev src/index.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
