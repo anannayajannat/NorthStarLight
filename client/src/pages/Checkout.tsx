@@ -129,7 +129,7 @@ const Checkout: React.FC = () => {
       
       toast({
         title: "Order placed successfully",
-        description: `Your order #৳{order.id} has been placed.`,
+        description: `Your order #${order.id} has been placed.`,
       });
     } catch (error) {
       toast({
@@ -496,11 +496,11 @@ const Checkout: React.FC = () => {
                       <p className="font-medium">{item.product.name}</p>
                       <p className="text-sm text-gray-500">
                         Qty: {item.quantity}
-                        {item.variant && ` | Size: ৳{item.variant.size}`}
+                        {item.variant && ` | Size: ${item.variant.size}`}
                       </p>
                     </div>
                   </div>
-                  <p className="font-medium">৳{item.subtotal.toFixed(2)}</p>
+                  <p className="font-medium">Tk{item.subtotal.toFixed(2)}</p>
                 </div>
               ))}
               
@@ -508,19 +508,19 @@ const Checkout: React.FC = () => {
               
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>৳{cart.totals.subtotal.toFixed(2)}</span>
+                <span>Tk{cart.totals.subtotal.toFixed(2)}</span>
               </div>
               
               <div className="flex justify-between">
                 <span>Shipping</span>
-                <span>{cart.totals.shipping === 0 ? "Free" : `৳৳{cart.totals.shipping.toFixed(2)}`}</span>
+                <span>{cart.totals.shipping === 0 ? "Free" : `Tk${cart.totals.shipping.toFixed(2)}`}</span>
               </div>
               
               <Separator />
               
               <div className="flex justify-between font-bold">
                 <span>Total</span>
-                <span>৳{cart.totals.total.toFixed(2)}</span>
+                <span>Tk{cart.totals.total.toFixed(2)}</span>
               </div>
             </CardContent>
           </Card>

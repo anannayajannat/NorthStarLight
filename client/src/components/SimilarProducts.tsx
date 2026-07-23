@@ -37,10 +37,10 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({ productId, limit = 4 
   const { toast } = useToast();
   
   const { data: products, isLoading, error } = useQuery<Product[]>({
-    queryKey: ['/api/products', productId, 'similar'],
+    queryKey: [`/api/products/${productId}/similar`],
     enabled: !!productId,
     retry: 1,
-  });
+      });
 
   if (isLoading) {
     return (
@@ -85,7 +85,7 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({ productId, limit = 4 
       
       toast({
         title: "Added to cart",
-        description: `৳{product.name} has been added to your cart.`,
+        description: `${product.name} has been added to your cart.`,
       });
     } catch (error) {
       toast({
@@ -101,7 +101,7 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({ productId, limit = 4 
       {products.slice(0, limit).map((product) => (
         <div key={product.id} className="relative group">
           <Link 
-            href={`/product/৳{product.id}`}
+            href={`/product/${product.id}`}
             onClick={() => handleProductClick(product)}
           >
             <Card className="overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg">
@@ -141,11 +141,11 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({ productId, limit = 4 
                 <div className="mt-1">
                   {product.salePrice ? (
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-gray-900">৳{formatPrice(product.salePrice)}</span>
-                      <span className="text-sm text-gray-500 line-through">৳{formatPrice(product.price)}</span>
+                      <span className="font-bold text-gray-900">Tk{formatPrice(product.salePrice)}</span>
+                      <span className="text-sm text-gray-500 line-through">Tk{formatPrice(product.price)}</span>
                     </div>
                   ) : (
-                    <span className="font-bold text-gray-900">৳{formatPrice(product.price)}</span>
+                    <span className="font-bold text-gray-900">Tk{formatPrice(product.price)}</span>
                   )}
                 </div>
               </CardContent>

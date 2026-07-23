@@ -56,4 +56,6 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
-
+body {
+  font-family: 'Poppins', sans-serif;
+}

@@ -64,7 +64,7 @@ const Cart: React.FC = () => {
         <h1 className="text-3xl font-bold">Your Cart</h1>
         <p className="text-gray-600 mt-2">
           {cart?.itemCount
-            ? `You have ৳{cart.itemCount} item৳{cart.itemCount > 1 ? "s" : ""} in your cart`
+            ? `You have ${cart.itemCount} item${cart.itemCount > 1 ? "s" : ""} in your cart`
             : "Your cart is empty"}
         </p>
       </div>
@@ -91,7 +91,7 @@ const Cart: React.FC = () => {
                     
                     <div className="ml-4 flex-grow">
                       <div className="flex justify-between">
-                        <Link href={`/products/৳{item.product.id}`}>
+                        <Link href={`/products/${item.product.id}`}>
                           <a className="font-medium text-lg hover:text-primary">
                             {item.product.name}
                           </a>
@@ -131,9 +131,9 @@ const Cart: React.FC = () => {
                         </div>
                         
                         <div className="text-right">
-                          <p className="font-medium">৳{item.price.toFixed(2)}</p>
+                          <p className="font-medium">Tk {item.price.toFixed(2)}</p>
                           <p className="text-sm text-gray-500">
-                            Subtotal: ৳{item.subtotal.toFixed(2)}
+                            Subtotal: Tk {item.subtotal.toFixed(2)}
                           </p>
                         </div>
                       </div>
@@ -153,19 +153,19 @@ const Cart: React.FC = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>৳{cart.totals.subtotal.toFixed(2)}</span>
+                    <span>Tk {cart.totals.subtotal.toFixed(2)}</span>
                   </div>
                   
                   <div className="flex justify-between">
                     <span>Shipping</span>
-                    <span>{cart.totals.shipping === 0 ? "Free" : `৳৳{cart.totals.shipping.toFixed(2)}`}</span>
+                    <span>{cart.totals.shipping === 0 ? "Free" : `Tk ${cart.totals.shipping.toFixed(2)}`}</span>
                   </div>
                   
                   <Separator className="my-2" />
                   
                   <div className="flex justify-between font-bold">
                     <span>Total</span>
-                    <span>৳{cart.totals.total.toFixed(2)}</span>
+                    <span>Tk{cart.totals.total.toFixed(2)}</span>
                   </div>
                 </div>
               </CardContent>

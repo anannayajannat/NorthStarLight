@@ -41,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
       await addToCart(product.id, 1);
       toast({
         title: "Added to cart",
-        description: `৳{product.name} has been added to your cart.`,
+        description: `The ${product.name} has been added to your cart.`,
       });
       refetchCart();
     } catch (error) {
@@ -54,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
   };
 
   return (
-    <Link href={`/products/৳{product.id}`}>
+    <Link href={`/products/${product.id}`}>
       <div className="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md cursor-pointer">
         <div className="relative">
           <img 
@@ -68,23 +68,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
             </Button>
           </div>
           
-          {product.isBestSeller && (
-            <div className="absolute top-3 left-3">
+          <div className="absolute top-3 left-3 flex flex-col gap-1 items-start">
+            {product.isBestSeller && (
               <Badge variant="secondary">BEST SELLER</Badge>
-            </div>
-          )}
-          
-          {product.isNew && (
-            <div className="absolute top-3 left-3">
+            )}
+            {product.isNew && (
               <Badge className="bg-green-500">NEW</Badge>
-            </div>
-          )}
-          
-          {product.isSale && (
-            <div className="absolute top-3 left-3">
+            )}
+            {product.isSale && (
               <Badge variant="destructive">SALE</Badge>
-            </div>
-          )}
+            )}
+          </div>
+
         </div>
         
         <div className="p-4">
@@ -95,11 +90,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showAddToCart = true
             <div>
               {product.salePrice ? (
                 <>
-                  <span className="font-semibold text-lg">৳{product.salePrice.toFixed(2)}</span>
-                  <span className="text-sm text-gray-500 line-through ml-2">৳{product.price.toFixed(2)}</span>
+                  <span className="font-semibold text-lg">Tk{product.salePrice.toFixed(2)}</span>
+                  <span className="text-sm text-gray-500 line-through ml-2">Tk{product.price.toFixed(2)}</span>
                 </>
               ) : (
-                <span className="font-semibold text-lg">৳{product.price.toFixed(2)}</span>
+                <span className="font-semibold text-lg">Tk{product.price.toFixed(2)}</span>
               )}
             </div>
             
