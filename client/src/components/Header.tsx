@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ onMobileMenuToggle, onCartToggle }) => 
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden lg:flex space-x-8">
             <Link href="/" className="text-neutral-dark hover:text-primary font-medium">
               Home
             </Link>
@@ -97,7 +97,7 @@ const Header: React.FC<HeaderProps> = ({ onMobileMenuToggle, onCartToggle }) => 
               )}
             </Button>
             
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={onMobileMenuToggle}>
+            <Button variant="ghost" size="icon" className="lg:hidden" onClick={onMobileMenuToggle}>
               <Menu className="h-5 w-5" />
             </Button>
           </div>

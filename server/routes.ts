@@ -404,8 +404,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         sort: sort as string | undefined,
       };
       
-      if (category) params.category = parseInt(category as string);
-      if (brand) params.brand = brand as string;
+      if (category) {
+        const catNum = parseInt(category as string);
+        if (!isNaN(catNum)) {
+          params.category = catNum;
+        } else {
+          const allCategories = await storage.getCategories();
+          const match = allCategories.find(c => c.name.toLowerCase() === (category as string).toLowerCase());
+          if (match) params.category = match.id;
+        }
+      }      if (brand) params.brand = brand as string;
       if (search) params.search = search as string;
       if (minPrice) params.minPrice = parseFloat(minPrice as string);
       if (maxPrice) params.maxPrice = parseFloat(maxPrice as string);

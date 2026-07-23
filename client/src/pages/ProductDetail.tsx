@@ -180,11 +180,11 @@ const ProductDetail: React.FC = () => {
     <div className="container mx-auto px-4 py-12">
       <div className="flex flex-col md:flex-row gap-8">
         {/* Product Image */}
-        <div className="md:w-1/2">
+        <div className="md:w-1/2 rounded-lg overflow-hidden">
           <img 
             src={product.imageUrl} 
             alt={product.name} 
-            className="w-full h-auto object-cover rounded-lg"
+            className="w-full h-auto object-cover rounded-lg transition-transform duration-300 hover:scale-125 cursor-zoom-in"
           />
         </div>
         

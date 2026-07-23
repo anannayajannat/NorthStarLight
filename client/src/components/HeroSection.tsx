@@ -30,9 +30,9 @@ const HeroSection: React.FC = () => {
             <img
               src="https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
               alt="Featured sneakers"
-              className="rounded-lg shadow-xl transform -rotate-6 hover:rotate-0 transition-transform duration-500"
+              className="rounded-lg shadow-xl md:transform md:-rotate-6 md:hover:rotate-0 transition-transform duration-500"
             />
-            <div className="absolute -bottom-4 -left-4 bg-white text-black px-6 py-2 rounded-full shadow-lg flex items-center">
+            <div className="absolute bottom-4 left-4 bg-white text-black px-6 py-2 rounded-full shadow-lg flex items-center">
               <span className="font-bold">Limited Edition</span>
             </div>
           </div>
