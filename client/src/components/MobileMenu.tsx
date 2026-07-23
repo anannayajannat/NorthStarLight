@@ -26,10 +26,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   return (
     <div className="md:hidden fixed inset-0 z-50 bg-white shadow-lg transform transition-transform duration-300">
       <div className="flex justify-between items-center p-4 border-b">
-        <span className="text-xl font-bold">
-          <span className="text-primary">SHOE</span>
-          <span className="text-secondary">VERSE</span>
-        </span>
+        <span className="text-xl font-bold text-primary">
+  NorthStarLight
+</span>
         <button onClick={onClose} className="text-gray-600">
           <X className="h-6 w-6" />
         </button>

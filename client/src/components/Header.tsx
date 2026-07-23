@@ -33,10 +33,9 @@ const Header: React.FC<HeaderProps> = ({ onMobileMenuToggle, onCartToggle }) => 
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold">
-                <span className="text-primary">SHOE</span>
-                <span className="text-secondary">VERSE</span>
-              </span>
+                <span className="text-xl font-bold text-primary">
+                    NorthStarLight
+                </span>
             </Link>
           </div>
 

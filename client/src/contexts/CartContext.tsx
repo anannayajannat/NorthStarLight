@@ -83,10 +83,15 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   // Refetch cart after login/logout
   useEffect(() => {
+    let lastAuthState: unknown = queryClient.getQueryData(["/api/auth/me"]);
+
     const unsubscribe = queryClient.getQueryCache().subscribe(() => {
-      const authQueryKey = "/api/auth/me";
-      if (queryClient.getQueryData([authQueryKey])) {
-        refetch();
+      const authData = queryClient.getQueryData(["/api/auth/me"]);
+      if (authData !== lastAuthState) {
+        lastAuthState = authData;
+        if (authData) {
+          refetch();
+        }
       }
     });
 

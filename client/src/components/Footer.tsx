@@ -8,9 +8,8 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">
-              <span className="text-primary">SHOE</span>
-              <span className="text-secondary">VERSE</span>
+            <h3 className="text-xl font-bold mb-4 text-white">
+                NorthStarLight
             </h3>
             <p className="text-gray-400 mb-4">Premium footwear for every step of your journey.</p>
             <div className="flex space-x-4">
@@ -125,7 +124,7 @@ const Footer: React.FC = () => {
         
         <div className="mt-12 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 text-sm mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} ShoeVerse. All rights reserved.
+            &copy; {new Date().getFullYear()} NorthStarLight. All rights reserved.
           </div>
           <div className="flex space-x-6">
             <a href="#" className="text-gray-400 hover:text-white text-sm">
