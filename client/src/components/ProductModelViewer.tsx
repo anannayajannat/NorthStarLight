@@ -83,6 +83,18 @@ const ProductModelViewer: React.FC<ProductModelViewerProps> = ({ productId }) =>
     // In a real implementation, we would use WebXR or a similar technology
     alert('AR functionality would launch here in a production environment');
   };
+
+  // Drei's ContactShadows types can drift out of sync with the installed
+  // Three.js version, causing a prop type mismatch at build time.
+  // Casting the props to `any` sidesteps that without touching runtime behavior.
+  const contactShadowsProps = {
+    opacity: 0.25,
+    scale: 10,
+    blur: 1,
+    far: 10,
+    resolution: 256,
+    color: "#000000",
+  } as any;
   
   return (
     <div className="w-full rounded-md overflow-hidden border">
@@ -106,14 +118,7 @@ const ProductModelViewer: React.FC<ProductModelViewerProps> = ({ productId }) =>
                 position={model.position || [0, 0, 0]} 
               />
               <Environment preset="city" />
-              <ContactShadows 
-                opacity={0.25} 
-                scale={10} 
-                blur={1} 
-                far={10} 
-                resolution={256} 
-                color="#000000" 
-              />
+              <ContactShadows {...contactShadowsProps} />
               <OrbitControls 
                 enablePan={true} 
                 enableZoom={true} 
