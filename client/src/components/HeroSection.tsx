@@ -16,12 +16,12 @@ const HeroSection: React.FC = () => {
             <div className="flex flex-wrap gap-4">
               <Link href="/products?category=men">
                 <span className="bg-white text-primary hover:bg-gray-100 py-3 px-8 rounded-md font-semibold transition cursor-pointer inline-block">
-                  Shop Men
+                  Shop Now
                 </span>
               </Link>
               <Link href="/products?category=women">
                 <span className="bg-secondary hover:bg-amber-600 text-white py-3 px-8 rounded-md font-semibold transition cursor-pointer inline-block">
-                  Shop Women
+                  New Arrivals
                 </span>
               </Link>
             </div>
@@ -32,9 +32,11 @@ const HeroSection: React.FC = () => {
               alt="Featured sneakers"
               className="rounded-lg shadow-xl md:transform md:-rotate-6 md:hover:rotate-0 transition-transform duration-500"
             />
-            <div className="absolute bottom-4 left-4 bg-white text-black px-6 py-2 rounded-full shadow-lg flex items-center">
-              <span className="font-bold">Limited Edition</span>
-            </div>
+            <Link href="/products?featured=true">
+              <div className="absolute -bottom-4 -left-4 bg-white text-black px-6 py-2 rounded-full shadow-lg flex items-center cursor-pointer hover:bg-gray-50">
+                <span className="font-bold">Limited Edition</span>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

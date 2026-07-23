@@ -101,7 +101,7 @@ const SimilarProducts: React.FC<SimilarProductsProps> = ({ productId, limit = 4 
       {products.slice(0, limit).map((product) => (
         <div key={product.id} className="relative group">
           <Link 
-            href={`/product/${product.id}`}
+            href={`/products/${product.id}`}
             onClick={() => handleProductClick(product)}
           >
             <Card className="overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-lg">

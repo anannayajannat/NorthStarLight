@@ -186,7 +186,7 @@ const FrequentlyBoughtTogether: React.FC<FrequentlyBoughtTogetherProps> = ({
                   />
                 </div>
                 <Link 
-                  href={`/product/${product.id}`} 
+                  href={`/products/${product.id}`} 
                   onClick={() => handleProductClick(product)}
                 >
                   <div className="p-2">

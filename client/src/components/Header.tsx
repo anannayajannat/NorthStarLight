@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { useCart } from "@/hooks/use-cart";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, User, Heart, ShoppingCart, Menu } from "lucide-react";
+import { Search, User, Heart, ShoppingCart, Menu, Star } from "lucide-react";
 
 interface HeaderProps {
   onMobileMenuToggle: () => void;
@@ -31,11 +31,13 @@ const Header: React.FC<HeaderProps> = ({ onMobileMenuToggle, onCartToggle }) => 
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center">
-                <span className="text-xl font-bold text-primary">
-                    NorthStarLight
-                </span>
+          <div className="flex items-center flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2">
+              <Star className="h-6 w-6 text-secondary fill-secondary" />
+              <span className="text-2xl font-bold tracking-tight">
+                <span className="text-primary">NorthStar</span>
+                <span className="text-secondary font-light">Light</span>
+              </span>
             </Link>
           </div>
 
