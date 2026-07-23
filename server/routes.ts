@@ -25,6 +25,13 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { randomUUID } from "crypto";
 
+// Fix: Augment express-session to include our custom cartId property
+declare module "express-session" {
+  interface SessionData {
+    cartId?: number;
+  }
+}
+
 const SessionStore = MemoryStore(session);
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -170,7 +177,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 cartId: userCart.id,
                 productId: item.productId,
                 variantId: item.variantId,
-                quantity: item.quantity,
+                quantity: item.quantity ?? 1, // Fix: Added null fallback
                 price: item.price,
               });
             }
@@ -701,9 +708,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id: item.id,
           product,
           variant,
-          quantity: item.quantity,
+          quantity: item.quantity ?? 1, // Fix: Added null fallback
           price: item.price,
-          subtotal: item.price * item.quantity,
+          subtotal: item.price * (item.quantity ?? 1), // Fix: Added null fallback
         };
       }));
       
@@ -786,7 +793,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Update quantity if item exists
         const updatedItem = await storage.updateCartItemQuantity(
           existingItem.id,
-          existingItem.quantity + quantity
+          (existingItem.quantity ?? 1) + quantity // Fix: Added null fallback
         );
         
         res.json(updatedItem);
@@ -952,7 +959,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Calculate total
       let total = 0;
       for (const item of cartItems) {
-        total += item.price * item.quantity;
+        total += item.price * (item.quantity ?? 1); // Fix: Added null fallback
       }
       
       // Create order
@@ -970,7 +977,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           orderId: order.id,
           productId: item.productId,
           variantId: item.variantId,
-          quantity: item.quantity,
+          quantity: item.quantity ?? 1, // Fix: Added null fallback
           price: item.price,
         });
         
@@ -979,7 +986,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const variant = await storage.getProductVariant(item.variantId);
           if (variant && variant.stock !== null) {
             await storage.updateProductVariant(item.variantId, {
-              stock: variant.stock - item.quantity,
+              stock: variant.stock - (item.quantity ?? 1), // Fix: Added null fallback
             });
           }
         }
@@ -1042,9 +1049,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id: item.id,
           product,
           variant,
-          quantity: item.quantity,
+          quantity: item.quantity ?? 1, // Fix: Added null fallback
           price: item.price,
-          subtotal: item.price * item.quantity,
+          subtotal: item.price * (item.quantity ?? 1), // Fix: Added null fallback
         };
       }));
       
@@ -1091,7 +1098,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const variant = await storage.getProductVariant(item.variantId);
           if (variant && variant.stock !== null) {
             await storage.updateProductVariant(item.variantId, {
-              stock: variant.stock + item.quantity,
+              stock: variant.stock + (item.quantity ?? 1), // Fix: Added null fallback
             });
           }
         }
