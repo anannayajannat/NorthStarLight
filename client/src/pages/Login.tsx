@@ -26,8 +26,7 @@ const Login: React.FC = () => {
 
   // Get the redirect URL from query params if it exists
   const query = new URLSearchParams(location.split("?")[1]);
-  const redirectTo = query.get("redirect") || "/";
-
+  const redirectTo = query.get("redirect") || "";
   // Redirect to home or specified redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
