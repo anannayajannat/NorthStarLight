@@ -144,17 +144,17 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   // User operations
   async getUser(id: number): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
+    const [user] = await db.select().from(users).where(eq(users.id, id)).limit(1);
     return user;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
+    const [user] = await db.select().from(users).where(eq(users.username, username)).limit(1);
     return user;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.email, email));
+    const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
     return user;
   }
 
@@ -170,7 +170,7 @@ export class DatabaseStorage implements IStorage {
 
   // Product operations
   async getProduct(id: number): Promise<Product | undefined> {
-    const [product] = await db.select().from(products).where(eq(products.id, id));
+    const [product] = await db.select().from(products).where(eq(products.id, id)).limit(1);
     return product;
   }
 
@@ -188,8 +188,7 @@ export class DatabaseStorage implements IStorage {
     newArrivals?: boolean;
     onSale?: boolean;
   } = {}): Promise<Product[]> {
-    let query = db.select().from(products);
-    
+    let query = db.select().from(products).$dynamic();
     // Apply filters
     const conditions = [];
     
@@ -327,7 +326,7 @@ export class DatabaseStorage implements IStorage {
 
   // Category operations
   async getCategory(id: number): Promise<Category | undefined> {
-    const [category] = await db.select().from(categories).where(eq(categories.id, id));
+    const [category] = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
     return category;
   }
 
@@ -352,12 +351,12 @@ export class DatabaseStorage implements IStorage {
 
   // Product Variant operations
   async getProductVariant(id: number): Promise<ProductVariant | undefined> {
-    const [variant] = await db.select().from(productVariants).where(eq(productVariants.id, id));
+    const [variant] = await db.select().from(productVariants).where(eq(productVariants.id, id)).limit(1);
     return variant;
   }
 
   async getProductVariantsBySku(sku: string): Promise<ProductVariant | undefined> {
-    const [variant] = await db.select().from(productVariants).where(eq(productVariants.sku, sku));
+    const [variant] = await db.select().from(productVariants).where(eq(productVariants.sku, sku)).limit(1);
     return variant;
   }
 
@@ -382,17 +381,17 @@ export class DatabaseStorage implements IStorage {
 
   // Cart operations
   async getCart(id: number): Promise<Cart | undefined> {
-    const [cart] = await db.select().from(carts).where(eq(carts.id, id));
+    const [cart] = await db.select().from(carts).where(eq(carts.id, id)).limit(1);
     return cart;
   }
 
   async getCartByUser(userId: number): Promise<Cart | undefined> {
-    const [cart] = await db.select().from(carts).where(eq(carts.userId, userId));
+    const [cart] = await db.select().from(carts).where(eq(carts.userId, userId)).limit(1);
     return cart;
   }
 
   async getCartBySession(sessionId: string): Promise<Cart | undefined> {
-    const [cart] = await db.select().from(carts).where(eq(carts.sessionId, sessionId));
+    const [cart] = await db.select().from(carts).where(eq(carts.sessionId, sessionId)).limit(1);
     return cart;
   }
 
@@ -428,7 +427,7 @@ export class DatabaseStorage implements IStorage {
 
   // Order operations
   async getOrder(id: number): Promise<Order | undefined> {
-    const [order] = await db.select().from(orders).where(eq(orders.id, id));
+    const [order] = await db.select().from(orders).where(eq(orders.id, id)).limit(1);
     return order;
   }
 
@@ -437,7 +436,7 @@ export class DatabaseStorage implements IStorage {
   }
   
   async getOrders(limit?: number): Promise<Order[]> {
-    let query = db.select().from(orders).orderBy(desc(orders.createdAt));
+    let query = db.select().from(orders).orderBy(desc(orders.createdAt)).$dynamic();
     
     if (limit) {
       query = query.limit(limit);
@@ -468,12 +467,12 @@ export class DatabaseStorage implements IStorage {
 
   // Payment operations
   async getPayment(id: number): Promise<Payment | undefined> {
-    const [payment] = await db.select().from(payments).where(eq(payments.id, id));
+    const [payment] = await db.select().from(payments).where(eq(payments.id, id)).limit(1);
     return payment;
   }
 
   async getPaymentByOrder(orderId: number): Promise<Payment | undefined> {
-    const [payment] = await db.select().from(payments).where(eq(payments.orderId, orderId));
+    const [payment] = await db.select().from(payments).where(eq(payments.orderId, orderId)).limit(1);
     return payment;
   }
 
@@ -493,7 +492,7 @@ export class DatabaseStorage implements IStorage {
 
   // User Preferences operations
   async getUserPreference(userId: number): Promise<UserPreference | undefined> {
-    const [preference] = await db.select().from(userPreferences).where(eq(userPreferences.userId, userId));
+    const [preference] = await db.select().from(userPreferences).where(eq(userPreferences.userId, userId)).limit(1);
     return preference;
   }
 
@@ -533,15 +532,17 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getProductInteractions(productId: number, action?: string, limit: number = 50): Promise<UserInteraction[]> {
-    let query = db.select()
-      .from(userInteractions)
-      .where(eq(userInteractions.productId, productId));
-    
+    const conditions = [eq(userInteractions.productId, productId)];
+
     if (action) {
-      query = query.where(eq(userInteractions.action, action));
+      conditions.push(eq(userInteractions.action, action));
     }
-    
-    return await query.orderBy(desc(userInteractions.timestamp)).limit(limit);
+
+    return await db.select()
+      .from(userInteractions)
+      .where(and(...conditions))
+      .orderBy(desc(userInteractions.timestamp))
+      .limit(limit);
   }
 
   // Recommendation operations
@@ -737,12 +738,12 @@ export class DatabaseStorage implements IStorage {
 
   // 3D Models operations
   async getProductModel(id: number): Promise<ProductModel | undefined> {
-    const [model] = await db.select().from(productModels).where(eq(productModels.id, id));
+    const [model] = await db.select().from(productModels).where(eq(productModels.id, id)).limit(1);
     return model;
   }
 
   async getProductModelByProduct(productId: number): Promise<ProductModel | undefined> {
-    const [model] = await db.select().from(productModels).where(eq(productModels.productId, productId));
+    const [model] = await db.select().from(productModels).where(eq(productModels.productId, productId)).limit(1);
     return model;
   }
 
@@ -763,13 +764,15 @@ export class DatabaseStorage implements IStorage {
 
   // Shoe Measurements operations
   async getShoeMeasurements(productId: number, size?: string): Promise<ShoeMeasurement[]> {
-    let query = db.select().from(shoeMeasurements).where(eq(shoeMeasurements.productId, productId));
-    
+    const conditions = [eq(shoeMeasurements.productId, productId)];
+
     if (size) {
-      query = query.where(eq(shoeMeasurements.size, size));
+      conditions.push(eq(shoeMeasurements.size, size));
     }
-    
-    return await query;
+
+    return await db.select()
+      .from(shoeMeasurements)
+      .where(and(...conditions));
   }
 
   async createShoeMeasurement(measurement: InsertShoeMeasurement): Promise<ShoeMeasurement> {
@@ -789,7 +792,7 @@ export class DatabaseStorage implements IStorage {
 
   // Admin operations
   async getAdminUser(userId: number): Promise<AdminUser | undefined> {
-    const [admin] = await db.select().from(adminUsers).where(eq(adminUsers.userId, userId));
+    const [admin] = await db.select().from(adminUsers).where(eq(adminUsers.userId, userId)).limit(1);
     return admin;
   }
 
